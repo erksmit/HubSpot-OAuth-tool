@@ -3,5 +3,8 @@
     client_secret: '',
     scopes: [
         ''
+    ],
+    optional_scopes: [
+        ''
     ]
 }
