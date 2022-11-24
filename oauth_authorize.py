@@ -42,7 +42,7 @@ def exchange_tokens(auth_code: str):
 scope_string = '%20'.join(scopes)
 auth_url = f'https://app.hubspot.com/oauth/authorize?client_id={client_id}&scope={scope_string}&redirect_uri={redirect_uri}'
 
-if optional_scopes.count() > 0:
+if len(optional_scopes) > 0:
     optional_scope_string = '%20'.join(optional_scopes)
     auth_url += f'&optional_scope={optional_scope_string}'
 
