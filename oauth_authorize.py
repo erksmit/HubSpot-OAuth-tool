@@ -19,6 +19,7 @@ flask = Flask(__name__)
 @flask.get("/oauth_callback")
 def recieve_auth_code():
     code = request.args.get('code')
+    print('Authorization code: ' + code)
     return exchange_tokens(auth_code=code)
     
 def exchange_tokens(auth_code: str):
@@ -33,8 +34,17 @@ def exchange_tokens(auth_code: str):
     if response.status_code == 200:
         body = response.json()
         refresh_token = body['refresh_token']
+        access_token = body['refresh_token']
+        expires_in = body['expires_in']
+        
         print('refresh token: ' + refresh_token)
-        return f'<p>your refresh token is: {refresh_token}</p>'
+        print(f'access token: {access_token}, it expires in {expires_in} seconds')
+        html = f'''
+        <p>Your authorization code is: {auth_code}</p>
+        <p>Your refresh token is: {refresh_token}</p>
+        <p>Your access token is: {access_token}, it will expire in {expires_in} seconds.'''
+        
+        return html
     else:
         print(response.text)
         return response.text
